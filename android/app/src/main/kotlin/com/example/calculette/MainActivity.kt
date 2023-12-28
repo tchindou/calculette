@@ -1,0 +1,6 @@
+package com.example.calculette
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
