@@ -9,7 +9,7 @@ Access and download the APK [`here`](./lib/assets/)
 <details>
 <summary><h2>📷 Screenshots</h2></summary>
 
-<img src="/screenshots/first.png" alt="first"> <img src="/screenshots/operation.png" alt="op"> <img src="/screenshots/result.png" alt="res">
+<img src="/screenshots/first.png" alt="first">        <img src="/screenshots/operation.png" alt="op">        <img src="/screenshots/result.png" alt="res">
 </details>
 
 <img src="https://komarev.com/ghpvc/?username=tchindou" alt="tchindou"> <a href="https://github.com/search?q=user%3Atchindou+language%3Adart"><img alt="Dart" src="https://img.shields.io/badge/dart-%230175C2.svg?logo=dart&logoColor=white"></a>
