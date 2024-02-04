@@ -3,7 +3,7 @@
 **`CALCULETTE`** the calculator, is a mobile application developed using the Flutter framework. It provides a user-friendly interface allowing users to perform a variety of mathematical operations, including basic calculations, trigonometric operations, logarithmic functions, and much more.
 I hope your visit will be rewarding and informative. Feel free to explore the code and give me feedback on my linkedin post [``here``](https://www.linkedin.com/posts/ptchindou_donnez-moi-six-heures-pour-abattre-un-arbre-activity-7094787719192567808-hDS3?utm_source=share&utm_medium=member_desktop)
 
-Acceder à l'apk et la telecharger [`ici`](./build/app/outputs/flutter-apk/app-release.apk)
+Acceder à l'apk et la telecharger [`ici`](./lib/assets/)
 
 <details>
 <summary><h2>📷 Screenshots</h2></summary>
