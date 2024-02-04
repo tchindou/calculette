@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_final_fields, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:calculette/logics/MathCalculator.dart';
+import 'package:calculette/logics/calcul_solver.dart';
 
 String operation = "";
 double result = 0;
@@ -163,9 +163,9 @@ class _CalcPanelState extends State<CalcPanel> {
         childAspectRatio: 1.35,
         children: [
           CalculatorButton(
-            text: 'e^x',
+            text: 'X^Y',
             onPressed: () {
-              widget.controller.text += "exp(";
+              widget.controller.text += "^";
             },
             index: 2,
           ),
@@ -243,7 +243,9 @@ class _CalcPanelState extends State<CalcPanel> {
             text: 'DEL',
             onPressed: () {
               String str = widget.controller.text;
-              str = str.substring(0, str.length - 1);
+              (str.isNotEmpty)
+                  ? str = str.substring(0, str.length - 1)
+                  : str = "";
               widget.controller.text = str;
             },
             index: 1,
@@ -307,7 +309,7 @@ class _CalcPanelState extends State<CalcPanel> {
           CalculatorButton(
             text: '1',
             onPressed: () {
-              widget.controller.text += "7";
+              widget.controller.text += "1";
             },
             index: 0,
           ),
@@ -352,8 +354,19 @@ class _CalcPanelState extends State<CalcPanel> {
               try {
                 result = MathCalculator().calculate(widget.controller.text);
 
-                widget.controller.text = result.toString();
-                widget.control.text = result.toString();
+                // Limiter le résultat à trois chiffres après la virgule
+                String resultString = result.toStringAsFixed(3);
+
+                // Convertir en double pour vérifier la partie décimale
+                double parsedResult = double.parse(resultString);
+                if (parsedResult % 1 == 0) {
+                  resultString = parsedResult
+                      .toInt()
+                      .toString(); // Convertir en entier si la partie décimale est zéro
+                }
+
+                widget.controller.text = resultString;
+                widget.control.text = resultString;
               } catch (e) {
                 resultError = e.toString();
                 widget.control.text = "[Al detecte une erreur]";

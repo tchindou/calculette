@@ -1,10 +1,9 @@
-// ignore_for_file: file_names
-
 import 'dart:math';
 
 class MathCalculator {
   bool isValidOperation(String operation) {
-    RegExp regExp = RegExp(r'^[\d\s\+\-\*\/\(\)cossintanlnlog]+$');
+    RegExp regExp = RegExp(
+        r'^[\d\s\+\-\*\^\/\(\)\^cossintanlnlogabsqrt]+$'); // Mise à jour de la regex pour inclure sqrt
     return regExp.hasMatch(operation);
   }
 
@@ -34,6 +33,44 @@ class MathCalculator {
         String operand = operation.substring(i, endIndex);
         operandStack.add(double.parse(operand));
         i = endIndex - 1;
+      } else if (char == '^') {
+        operatorStack.add('^');
+      } else if (char == '+') {
+        operatorStack.add('+');
+      } else if (char == '-') {
+        operatorStack.add('-');
+      } else if (char == '*') {
+        operatorStack.add('*');
+      } else if (char == '/') {
+        operatorStack.add('/');
+      } else if (operation.substring(i, i + 2) == 'pi') {
+        // Gestion de la constante pi
+        operandStack.add(pi);
+        i += 1; // Saute les caractères suivants ('i') de 'pi'
+      } else if (char == 's') {
+        // Gestion de 'sqrt' et 'sin'
+        if (operation.substring(i, i + 3) == 'sin') {
+          operatorStack.add('sin');
+          i += 2;
+        } else if (operation.substring(i, i + 4) == 'sqrt') {
+          operatorStack.add('sqrt');
+          i += 3;
+        }
+      } else if (operation.substring(i, i + 3) == 'cos') {
+        operatorStack.add('cos');
+        i += 2;
+      } else if (operation.substring(i, i + 3) == 'tan') {
+        operatorStack.add('tan');
+        i += 2;
+      } else if (operation.substring(i, i + 3) == 'log') {
+        operatorStack.add('log');
+        i += 2;
+      } else if (operation.substring(i, i + 2) == 'ln') {
+        operatorStack.add('log');
+        i += 1;
+      } else if (char == 'abs') {
+        // Gestion de la fonction abs
+        operatorStack.add('abs');
       } else {
         while (operatorStack.isNotEmpty &&
             precedence(operatorStack.last) >= precedence(char)) {
@@ -54,12 +91,15 @@ class MathCalculator {
       List<double> operandStack, List<String> operatorStack) {
     String operator = operatorStack.removeLast();
     double result;
-    if (operator == 'cos' || operator == 'sin' || operator == 'tan') {
+    if (operator == 'sin' || operator == 'cos' || operator == 'tan') {
       double operand = operandStack.removeLast();
       result = trigonometricFunction(operator, operand);
     } else if (operator == 'ln' || operator == 'log') {
       double operand = operandStack.removeLast();
       result = logarithmicFunction(operator, operand);
+    } else if (operator == 'sqrt') {
+      double operand = operandStack.removeLast();
+      result = sqrt(operand);
     } else if (operator == 'abs') {
       double operand = operandStack.removeLast();
       result = operand.abs();
@@ -81,6 +121,9 @@ class MathCalculator {
           break;
         case '-':
           result = operand1 - operand2;
+          break;
+        case '^':
+          result = pow(operand1, operand2) as double;
           break;
         default:
           throw ArgumentError("Opérateur non pris en charge : $operator");
@@ -129,12 +172,14 @@ class MathCalculator {
       case '*':
       case '/':
         return 2;
-      case 'cos':
       case 'sin':
+      case 'cos':
       case 'tan':
       case 'ln':
       case 'log':
+      case 'sqrt':
       case 'abs':
+      case '^':
         return 3;
       default:
         throw ArgumentError("Opérateur non pris en charge : $operator");
